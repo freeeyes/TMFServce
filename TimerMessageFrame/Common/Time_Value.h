@@ -67,6 +67,32 @@ namespace ts_timer
             return rs;
         }
 
+        bool operator<=(const CTime_Value& ar)const
+        {
+            if (this->Get_sec() < ar.Get_sec())
+            {
+                return false;
+            }
+            else
+            {
+                if (this->Get_sec() == ar.Get_sec())
+                {
+                    if (this->Get_usec() <= ar.Get_usec())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
     private:
         time_t      m_tv_sec;     //ÃëÖµ
         suseconds_t m_tv_usec;    //ºÁÃëÖµ

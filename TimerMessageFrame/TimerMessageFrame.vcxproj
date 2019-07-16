@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
+    <ClInclude Include="Common\ThreadLock.h" />
     <ClInclude Include="Common\TimerCommon.h" />
     <ClInclude Include="Common\TimerInfo.h" />
     <ClInclude Include="Common\TimerThread.h" />
