@@ -1095,7 +1095,7 @@ public:
             //内存已满，或者数据已经存在
             if (HASH_DEBUG_ON == m_emHashDebug)
             {
-                PRINTF("[Add_Hash_Data]GetHashTablePos is -1.\n", nPos);
+                PRINTF("[Add_Hash_Data]GetHashTablePos is (%d).\n", nPos);
             }
 
             return -1;

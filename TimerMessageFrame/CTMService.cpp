@@ -88,7 +88,31 @@ void CTMService::Close()
     m_HashTimerList.Close();
 }
 
-int CTMService::AddMessage(const char* pName, ts_timer::CTime_Value, void* pArg)
+int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
 {
+    CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
+
+    if (NULL == pTimerInfo)
+    {
+        return -1;
+    }
+
+    pTimerInfo->m_objMutex.Lock();
+
+    if (pTimerInfo->m_vecEventsList.size() >= pTimerInfo->m_nMaxQueueList)
+    {
+        pTimerInfo->m_objMutex.UnLock();
+        return -1;
+    }
+
+    CEventsInfo objEventsInfo;
+
+    objEventsInfo.m_tcExpire = tvexpire;
+    objEventsInfo.m_pArg     = pArg;
+
+    pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
+
+    pTimerInfo->m_objMutex.UnLock();
+
     return 0;
 }

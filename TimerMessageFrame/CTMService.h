@@ -94,7 +94,7 @@ public:
     void Close();
 
     //Ìí¼ÓÏûÏ¢
-    int AddMessage(const char* pName, ts_timer::CTime_Value, void* pArg);
+    int AddMessage(string pName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID);
 
 private:
     ts_timer::CTimerThread m_tsTimer;
