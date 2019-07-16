@@ -26,7 +26,7 @@ enum EM_HASH_DEBUG
     HASH_DEBUG_OFF,
 };
 
-#define DEF_HASH_KEY_SIZE 20           //默认的Hash key长度
+#define DEF_HASH_KEY_SIZE 100           //默认的Hash key长度
 
 //hash表结构
 template <class T>
@@ -1009,7 +1009,7 @@ public:
                 }
                 else
                 {
-                    vsnprintf(pData->m_pKey, pData->m_sKeyLen, "%d", u4Key);
+                    snprintf(pData->m_pKey, pData->m_sKeyLen, "%d", u4Key);
                     pData->m_pValue = pValue;
                     pLink->m_pData = pData;
                     m_lpTable[nPos] = pLink;
@@ -1046,7 +1046,7 @@ public:
                 }
                 else
                 {
-                    vsnprintf(pData->m_pKey, pData->m_sKeyLen, "%d", u4Key);
+                    snprintf(pData->m_pKey, pData->m_sKeyLen, "%d", u4Key);
                     pData->m_pValue = pValue;
                     pLink->m_pData = pData;
                     pLink->m_pPerv = pLastLink;
@@ -1120,7 +1120,7 @@ public:
                 }
                 else
                 {
-                    vsnprintf(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
+                    snprintf(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
                     pData->m_pValue = pValue;
                     pLink->m_pData = pData;
                     m_lpTable[nPos] = pLink;
@@ -1162,7 +1162,7 @@ public:
                 }
                 else
                 {
-                    vsnprintf(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
+                    snprintf(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
                     pData->m_pValue = pValue;
                     pLink->m_pData = pData;
                     pLink->m_pPerv = pLastLink;
@@ -1269,7 +1269,7 @@ private:
     int32 GetHashTablePos_By_HashIndex(unsigned long uHashStart, EM_HASH_STATE emHashState, T*& pT)
     {
         char szCurrKey[DEF_HASH_KEY_SIZE] = { '\0' };
-        vsnprintf(szCurrKey, DEF_HASH_KEY_SIZE, "%d", uHashStart);
+        snprintf(szCurrKey, DEF_HASH_KEY_SIZE, "%d", uHashStart);
 
         //把当前数字对当前Hash数组总数取余
         unsigned long uHashPos = uHashStart % m_objHashPool.Get_Count();
@@ -1364,7 +1364,7 @@ private:
     int32 DelHashTablePos_By_HashIndex(unsigned long uHashStart)
     {
         char szCurrKey[DEF_HASH_KEY_SIZE] = { '\0' };
-        vsnprintf(szCurrKey, DEF_HASH_KEY_SIZE, "%d", uHashStart);
+        snprintf(szCurrKey, DEF_HASH_KEY_SIZE, "%d", uHashStart);
 
         //把当前数字对当前Hash数组总数取余
         unsigned long uHashPos = uHashStart % m_objHashPool.Get_Count();

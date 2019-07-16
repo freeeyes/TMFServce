@@ -28,7 +28,7 @@ int CTMService::Init()
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "Interval", pTimerInfo->m_nInterval, pInterval)
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventMaxCount", pTimerInfo->m_nMaxQueueList, pMaxEvent))
     {
-        if (0 >= m_HashTimerList.Add_Hash_Data_By_Key_Unit32(pTimerInfo->m_nID, pTimerInfo))
+        if (0 >= m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName, pTimerInfo))
         {
             PRINTF("[CTMService::Init]Add_Hash_Data_By_Key_Unit32(%s) error.\n", pTimerInfo->m_szName);
             delete pTimerInfo;
