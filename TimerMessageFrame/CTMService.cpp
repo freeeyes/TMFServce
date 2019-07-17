@@ -23,7 +23,7 @@ int CTMService::Init()
 
     m_HashTimerList.Init(m_nTimerMaxCount);
 
-    while (objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "ID", pTimerInfo->m_nID, pID)
+    while (objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventID", pTimerInfo->m_nID, pID)
            && objXmlOperation.Read_XML_Data_Multiple_String("Timer", "Name", pTimerInfo->m_szName, 100, pName)
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "Interval", pTimerInfo->m_nInterval, pInterval)
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventMaxCount", pTimerInfo->m_nMaxQueueList, pMaxEvent))

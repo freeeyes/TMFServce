@@ -22,7 +22,7 @@ public:
     }
 };
 
-typedef vector<CEventsInfo> vecEventsList;
+using vecEventsList = vector<CEventsInfo>;
 
 //定时器信息结构
 class CTimerInfo
@@ -35,12 +35,8 @@ public:
     CThreadLock   m_objMutex;
     vecEventsList m_vecEventsList;
 
-    CTimerInfo()
+	CTimerInfo() : m_nID(0), m_szName{'\0'}, m_nInterval(0), m_nMaxQueueList(0)
     {
-        m_nID           = 0;
-        m_szName[0]     = '\0';
-        m_nInterval     = 0;
-        m_nMaxQueueList = 0;
     }
 };
 

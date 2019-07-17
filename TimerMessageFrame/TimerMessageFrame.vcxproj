@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Common\HashTable.h" />
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
     <ClInclude Include="Common\ThreadLock.h" />
