@@ -29,7 +29,7 @@ class CTimerInfo
 {
 public:
     int  m_nID;
-    char m_szName[100];
+    string m_szName;
     int  m_nInterval;
     int  m_nMaxQueueList;
     CThreadLock   m_objMutex;
@@ -60,7 +60,7 @@ public:
             if ((*it).m_tcExpire <= tvNow)
             {
                 //到时的数据，拿出来处理
-                printf_s("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName);
+                printf_s("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName.c_str());
                 pTimeInfo->m_vecEventsList.erase(it);
             }
             else
@@ -71,7 +71,7 @@ public:
 
         pTimeInfo->m_objMutex.UnLock();
 
-        printf_s("[CTaskTimeNode::Run](%s) is OK.\n", pTimeInfo->m_szName);
+        printf_s("[CTaskTimeNode::Run](%s) is OK.\n", pTimeInfo->m_szName.c_str());
     }
 
     virtual void Error(int nLastRunTimerID, int nTimeoutTime, std::vector<ts_timer::CTime_Value>& vecTimoutList, void* pArg)

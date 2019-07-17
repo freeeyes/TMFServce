@@ -24,13 +24,13 @@ bool CXmlOpeation::Init(const char* pFileName)
     return true;
 }
 
-bool CXmlOpeation::Read_XML_Data_Single_String(const char* pTag, const char* pName, char* pValue, int nMaxSize)
+bool CXmlOpeation::Read_XML_Data_Single_String(const char* pTag, const char* pName, std::string& sValue)
 {
     char* pData = GetData(pTag, pName);
 
     if (pData != NULL)
     {
-        vsnprintf(pValue, nMaxSize, "%s", pData);
+		sValue = pData;
         return true;
     }
     else
@@ -39,13 +39,13 @@ bool CXmlOpeation::Read_XML_Data_Single_String(const char* pTag, const char* pNa
     }
 }
 
-bool CXmlOpeation::Read_XML_Data_Multiple_String(const char* pTag, const char* pName, char* pValue, int nMaxSize, TiXmlElement*& pTi)
+bool CXmlOpeation::Read_XML_Data_Multiple_String(const char* pTag, const char* pName, std::string& sValue, TiXmlElement*& pTi)
 {
     char* pData = GetData(pTag, pName, pTi);
 
     if (pData != NULL)
     {
-        vsnprintf(pValue, nMaxSize, "%s", pData);
+		sValue = pData;
         return true;
     }
     else

@@ -24,13 +24,13 @@ int CTMService::Init()
     m_HashTimerList.Init(m_nTimerMaxCount);
 
     while (objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventID", pTimerInfo->m_nID, pID)
-           && objXmlOperation.Read_XML_Data_Multiple_String("Timer", "Name", pTimerInfo->m_szName, 100, pName)
+           && objXmlOperation.Read_XML_Data_Multiple_String("Timer", "Name", pTimerInfo->m_szName, pName)
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "Interval", pTimerInfo->m_nInterval, pInterval)
            && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventMaxCount", pTimerInfo->m_nMaxQueueList, pMaxEvent))
     {
-        if (0 >= m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName, pTimerInfo))
+        if (0 >= m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName.c_str(), pTimerInfo))
         {
-            PRINTF("[CTMService::Init]Add_Hash_Data_By_Key_Unit32(%s) error.\n", pTimerInfo->m_szName);
+            PRINTF("[CTMService::Init]Add_Hash_Data_By_Key_Unit32(%s) error.\n", pTimerInfo->m_szName.c_str());
             delete pTimerInfo;
         }
 
@@ -62,7 +62,7 @@ int CTMService::Init()
 
         if (false == m_tsTimer.Add_Timer((ts_timer::ITimeNode*)pTimeNode, (void*)vecInfoList[i]))
         {
-            PRINTF("[CTMService::Init]m_tsTimer.Add_Timer(%s) is error.\n", vecInfoList[i]->m_szName);
+            PRINTF("[CTMService::Init]m_tsTimer.Add_Timer(%s) is error.\n", vecInfoList[i]->m_szName.c_str());
         }
     }
 
