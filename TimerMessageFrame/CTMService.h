@@ -22,25 +22,21 @@ public:
     }
 };
 
-typedef vector<CEventsInfo> vecEventsList;
+using vecEventsList = vector<CEventsInfo>;
 
 //定时器信息结构
 class CTimerInfo
 {
 public:
     int  m_nID;
-    char m_szName[100];
+    string m_szName;
     int  m_nInterval;
     int  m_nMaxQueueList;
     CThreadLock   m_objMutex;
     vecEventsList m_vecEventsList;
 
-    CTimerInfo()
+	CTimerInfo() : m_nID(0), m_szName{'\0'}, m_nInterval(0), m_nMaxQueueList(0)
     {
-        m_nID           = 0;
-        m_szName[0]     = '\0';
-        m_nInterval     = 0;
-        m_nMaxQueueList = 0;
     }
 };
 
@@ -64,7 +60,7 @@ public:
             if ((*it).m_tcExpire <= tvNow)
             {
                 //到时的数据，拿出来处理
-                printf_s("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName);
+                printf_s("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName.c_str());
                 pTimeInfo->m_vecEventsList.erase(it);
             }
             else
@@ -75,7 +71,7 @@ public:
 
         pTimeInfo->m_objMutex.UnLock();
 
-        printf_s("[CTaskTimeNode::Run](%s) is OK.\n", pTimeInfo->m_szName);
+        printf_s("[CTaskTimeNode::Run](%s) is OK.\n", pTimeInfo->m_szName.c_str());
     }
 
     virtual void Error(int nLastRunTimerID, int nTimeoutTime, std::vector<ts_timer::CTime_Value>& vecTimoutList, void* pArg)

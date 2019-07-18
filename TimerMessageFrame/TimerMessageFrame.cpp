@@ -6,6 +6,9 @@
 
 int main()
 {
+	CTMService tm;
+	tm.Init();
+	tm.Close();
     getchar();
     return 0;
 }
