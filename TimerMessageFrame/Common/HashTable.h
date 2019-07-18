@@ -779,7 +779,7 @@ public:
             return false;
         }
 
-        sprintf_safe(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
+        snprintf(pData->m_pKey, pData->m_sKeyLen, "%s", pKey);
         pData->m_pValue    = pT;
         pLink->m_pData     = pData;
         pLink->m_pPerv     = pLastLink;
