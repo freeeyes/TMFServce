@@ -154,6 +154,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Common\HashTable.h" />
+    <ClInclude Include="Common\ILogicQueue.h" />
+    <ClInclude Include="Common\IMessageQueueManager.h" />
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
     <ClInclude Include="Common\ThreadLock.h" />
@@ -161,12 +163,14 @@
     <ClInclude Include="Common\TimerInfo.h" />
     <ClInclude Include="Common\TimerThread.h" />
     <ClInclude Include="Common\Time_Value.h" />
+    <ClInclude Include="Common\TSCommon.h" />
     <ClInclude Include="Common\XmlOpeation.h" />
     <ClInclude Include="CTMService.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common\ILogicQueue.cpp" />
     <ClCompile Include="Common\TimerInfo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>

@@ -57,6 +57,15 @@
     <ClInclude Include="Common\HashTable.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\TSCommon.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\IMessageQueueManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ILogicQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TimerMessageFrame.cpp">
@@ -87,6 +96,9 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\XmlOpeation.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ILogicQueue.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>

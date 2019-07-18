@@ -1,12 +1,14 @@
 #include "CTMService.h"
 
 
-CTMService::CTMService() :m_nTimerMaxCount(0)
+CTMService::CTMService() :m_nTimerMaxCount(0), m_pMessageQueueManager(NULL)
 {
 }
 
-int CTMService::Init()
+int CTMService::Init(IMessageQueueManager* pMessageQueueManager)
 {
+    m_pMessageQueueManager = pMessageQueueManager;
+
     //读取配置文件
     CXmlOpeation objXmlOperation;
 
@@ -19,25 +21,33 @@ int CTMService::Init()
     TiXmlElement* pInterval = NULL;
     TiXmlElement* pMaxEvent = NULL;
 
-    CTimerInfo* pTimerInfo = new CTimerInfo();
-
     m_HashTimerList.Init(m_nTimerMaxCount);
 
-    while (objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventID", pTimerInfo->m_nID, pID)
-           && objXmlOperation.Read_XML_Data_Multiple_String("Timer", "Name", pTimerInfo->m_szName, pName)
-           && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "Interval", pTimerInfo->m_nInterval, pInterval)
-           && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventMaxCount", pTimerInfo->m_nMaxQueueList, pMaxEvent))
+    string szName;
+    int  nID           = 0;
+    int  nInterval     = 0;
+    int  nMaxQueueList = 0;
+
+    while (objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventID", nID, pID)
+           && objXmlOperation.Read_XML_Data_Multiple_String("Timer", "Name", szName, pName)
+           && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "Interval", nInterval, pInterval)
+           && objXmlOperation.Read_XML_Data_Multiple_Int("Timer", "EventMaxCount", nMaxQueueList, pMaxEvent))
     {
-        if (0 >= m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName.c_str(), pTimerInfo))
+        //写入配置文件
+        CTimerInfo* pTimerInfo = new CTimerInfo();
+
+        pTimerInfo->m_nID                  = nID;
+        pTimerInfo->m_szName               = szName;
+        pTimerInfo->m_nInterval            = nInterval;
+        pTimerInfo->m_nMaxQueueList        = nMaxQueueList;
+        pTimerInfo->m_pMessageQueueManager = m_pMessageQueueManager;
+
+        if (0 > m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName.c_str(), pTimerInfo))
         {
             PRINTF("[CTMService::Init]Add_Hash_Data_By_Key_Unit32(%s) error.\n", pTimerInfo->m_szName.c_str());
             delete pTimerInfo;
         }
-
-        pTimerInfo = new CTimerInfo();
     }
-
-    delete pTimerInfo;
 
     if (m_HashTimerList.Get_Used_Count() > m_nTimerMaxCount)
     {
@@ -82,7 +92,7 @@ void CTMService::Close()
 
     for (int i = 0; i < (int)vecInfoList.size(); i++)
     {
-        delete vecInfoList[i];
+        delete (CTimerInfo* )vecInfoList[i];
     }
 
     m_HashTimerList.Close();
@@ -107,8 +117,9 @@ int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void*
 
     CEventsInfo objEventsInfo;
 
-    objEventsInfo.m_tcExpire = tvexpire;
-    objEventsInfo.m_pArg     = pArg;
+    objEventsInfo.m_tcExpire   = tvexpire;
+    objEventsInfo.m_pArg       = pArg;
+    objEventsInfo.m_nMessageID = nMessageID;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
