@@ -12,7 +12,7 @@ public:
     void Close();
 
     //Ìí¼ÓÏûÏ¢
-    int AddMessage(string pName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID);
+    int AddMessage(string strTimerName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID);
 
 private:
     ts_timer::CTimerThread m_tsTimer;

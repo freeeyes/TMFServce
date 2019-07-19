@@ -98,9 +98,9 @@ void CTMService::Close()
     m_HashTimerList.Close();
 }
 
-int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
+int CTMService::AddMessage(string strTimerName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
 {
-    CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
+    CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strTimerName.c_str());
 
     if (NULL == pTimerInfo)
     {
