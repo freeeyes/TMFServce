@@ -215,7 +215,7 @@ void ts_timer::CTimerThread::Run()
     m_TimerInfoList.Set_Thread_ID(nThreadID);
 #endif
     CTime_Value ttNow = GetTimeofDay();
-    printf("[CTimerThread::Run]<%s> is Run.\n", ttNow.Get_string().c_str());
+  //  printf("[CTimerThread::Run]<%s> is Run.\n", ttNow.Get_string().c_str());
 }
 
 /*

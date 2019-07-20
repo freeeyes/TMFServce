@@ -98,7 +98,7 @@ void CTMService::Close()
     m_HashTimerList.Close();
 }
 
-int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
+int CTMService::_AddMessage(string strName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
 {
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
@@ -117,7 +117,7 @@ int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void*
 
     CEventsInfo objEventsInfo;
 
-    objEventsInfo.m_tcExpire   = tvexpire;
+    objEventsInfo.m_tcExpire   = ts_timer::GetTimeofDay() + tvexpire;
     objEventsInfo.m_pArg       = pArg;
     objEventsInfo.m_nMessageID = nMessageID;
 
@@ -126,4 +126,27 @@ int CTMService::AddMessage(string strName, ts_timer::CTime_Value tvexpire, void*
     pTimerInfo->m_objMutex.UnLock();
 
     return 0;
+}
+
+int CTMService::AddMessage(const char* pName, long sec, long usec, void* pArg, int nMessageID)
+{
+	return _AddMessage(pName, ts_timer::CTime_Value(sec, usec), pArg, nMessageID);
+}
+
+
+ITMService* CreateCTMService(IMessageQueueManager* pMessageQueueManager)
+{
+	CTMService* p = new CTMService;
+	p->Init(pMessageQueueManager);
+	return p;
+}
+
+void DsetroyCTMService(ITMService* pTM)
+{
+	CTMService* p = dynamic_cast<CTMService*>(pTM);
+	if (nullptr != p)
+	{
+		p->Close();
+		delete pTM;
+	}
 }

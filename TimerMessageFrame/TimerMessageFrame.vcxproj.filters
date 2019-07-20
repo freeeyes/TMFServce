@@ -33,9 +33,6 @@
     <ClInclude Include="Common\TimerThread.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="CTMService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Lcm.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -57,13 +54,16 @@
     <ClInclude Include="Common\HashTable.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TSCommon.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\IMessageQueueManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ILogicQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CTMService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TSCommon.hpp">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
