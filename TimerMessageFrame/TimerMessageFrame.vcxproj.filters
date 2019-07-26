@@ -66,6 +66,9 @@
     <ClInclude Include="Common\TSCommon.hpp">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\ThreadLogic.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TimerMessageFrame.cpp">
@@ -99,6 +102,9 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ILogicQueue.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ThreadLogic.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>

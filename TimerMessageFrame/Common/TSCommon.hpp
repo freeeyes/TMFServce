@@ -5,7 +5,7 @@
 #include "XmlOpeation.h"
 #include "ThreadLock.h"
 #include "HashTable.h"
-#include "IMessageQueueManager.h"
+#include "ThreadLogic.h"
 #include <vector>
 
 using namespace std;
@@ -38,7 +38,7 @@ public:
     int  m_nMaxQueueList;
     CThreadLock   m_objMutex;
     vecEventsList m_vecEventsList;
-    IMessageQueueManager* m_pMessageQueueManager;
+    CThreadQueueManager* m_pMessageQueueManager;
 
     CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL)
     {
@@ -70,7 +70,7 @@ public:
                 if (NULL != pTimeInfo->m_pMessageQueueManager)
                 {
                     //输出到消息队列
-                    pTimeInfo->m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
+                    //pTimeInfo->m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
                 }
                 else
                 {

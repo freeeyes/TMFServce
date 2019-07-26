@@ -161,6 +161,7 @@
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
     <ClInclude Include="Common\ThreadLock.h" />
+    <ClInclude Include="Common\ThreadLogic.h" />
     <ClInclude Include="Common\TimerCommon.h" />
     <ClInclude Include="Common\TimerInfo.h" />
     <ClInclude Include="Common\TimerThread.h" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\ILogicQueue.cpp" />
+    <ClCompile Include="Common\ThreadLogic.cpp" />
     <ClCompile Include="Common\TimerInfo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>

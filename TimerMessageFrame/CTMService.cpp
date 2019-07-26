@@ -1,14 +1,12 @@
 #include "CTMService.h"
 
 
-CTMService::CTMService() :m_nTimerMaxCount(0), m_pMessageQueueManager(NULL)
+CTMService::CTMService() :m_nTimerMaxCount(0)
 {
 }
 
-int CTMService::Init(IMessageQueueManager* pMessageQueueManager)
+int CTMService::Init()
 {
-    m_pMessageQueueManager = pMessageQueueManager;
-
     //¶ÁÈ¡ÅäÖÃÎÄ¼þ
     CXmlOpeation objXmlOperation;
 
@@ -40,7 +38,7 @@ int CTMService::Init(IMessageQueueManager* pMessageQueueManager)
         pTimerInfo->m_szName               = szName;
         pTimerInfo->m_nInterval            = nInterval;
         pTimerInfo->m_nMaxQueueList        = nMaxQueueList;
-        pTimerInfo->m_pMessageQueueManager = m_pMessageQueueManager;
+        pTimerInfo->m_pMessageQueueManager = &m_ThreadQueueManager;
 
         if (0 > m_HashTimerList.Add_Hash_Data(pTimerInfo->m_szName.c_str(), pTimerInfo))
         {
@@ -130,23 +128,24 @@ int CTMService::_AddMessage(string strName, ts_timer::CTime_Value tvexpire, void
 
 int CTMService::AddMessage(const char* pName, long sec, long usec, void* pArg, int nMessageID)
 {
-	return _AddMessage(pName, ts_timer::CTime_Value(sec, usec), pArg, nMessageID);
+    return _AddMessage(pName, ts_timer::CTime_Value(sec, usec), pArg, nMessageID);
 }
 
 
-ITMService* CreateCTMService(IMessageQueueManager* pMessageQueueManager)
+ITMService* CreateCTMService()
 {
-	CTMService* p = new CTMService;
-	p->Init(pMessageQueueManager);
-	return p;
+    CTMService* p = new CTMService;
+    p->Init();
+    return p;
 }
 
 void DsetroyCTMService(ITMService* pTM)
 {
-	CTMService* p = dynamic_cast<CTMService*>(pTM);
-	if (nullptr != p)
-	{
-		p->Close();
-		delete pTM;
-	}
+    CTMService* p = dynamic_cast<CTMService*>(pTM);
+
+    if (nullptr != p)
+    {
+        p->Close();
+        delete pTM;
+    }
 }
