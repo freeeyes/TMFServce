@@ -15,14 +15,14 @@ const char XML_CONF_FILE[] = "Timer.xml";
 class CEventsInfo
 {
 public:
-    ts_timer::CTime_Value m_tcExpire;
-    void*                 m_pArg;
-    int                   m_nMessageID;
+    ts_timer::CTime_Value       m_tcExpire;
+    void*                       m_pArg;
+    int                         m_nMessageID;
+    int                         m_nWorkThreadID;
+    CMessageInfo::UserFunctor   fn;
 
-    CEventsInfo()
+    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0)
     {
-        m_pArg = NULL;
-        m_nMessageID = 0;
     }
 };
 
@@ -70,7 +70,10 @@ public:
                 if (NULL != pTimeInfo->m_pMessageQueueManager)
                 {
                     //输出到消息队列
-                    //pTimeInfo->m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
+                    pTimeInfo->m_pMessageQueueManager->AddMessage((*it).m_nWorkThreadID,
+                            std::move((*it).fn),
+                            (*it).m_nMessageID,
+                            (*it).m_pArg);
                 }
                 else
                 {

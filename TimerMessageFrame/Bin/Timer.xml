@@ -8,5 +8,5 @@
 	<!-- 根据消息ID映射不同的工作线程ID的配置关系 -->
 	<MessageInfo LogicThreadID="1" MessageID="1" />
 	<MessageInfo LogicThreadID="2" MessageID="1" />
-	<MessageInfo LogicThreadID="3" MessageID="2" />
+	<MessageInfo LogicThreadID="2" MessageID="3" />
 </config>

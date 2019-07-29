@@ -71,7 +71,7 @@ namespace ts_timer
         {
             if (this->Get_sec() < ar.Get_sec())
             {
-                return false;
+                return true;
             }
             else
             {

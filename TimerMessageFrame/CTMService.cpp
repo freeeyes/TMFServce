@@ -74,6 +74,44 @@ int CTMService::Init()
         }
     }
 
+    //获得当前工作线程配置列表
+    m_T2MList.clear();
+    m_M2TList.clear();
+
+    TiXmlElement* pWorkThreadID = NULL;
+    TiXmlElement* pMessageID    = NULL;
+
+    int nWorkThreadID = 0;
+    int nMessageID    = 0;
+    char szT2MID[50] = { '\0' };
+
+    while (objXmlOperation.Read_XML_Data_Multiple_Int("MessageInfo", "LogicThreadID", nWorkThreadID, pWorkThreadID)
+           && objXmlOperation.Read_XML_Data_Multiple_Int("MessageInfo", "MessageID", nMessageID, pMessageID))
+    {
+        //写入配置文件
+        bool blIsAdd = true;
+
+        unordered_map<int, int>::iterator ftm = m_M2TList.find(nMessageID);
+
+        if (m_M2TList.end() == ftm)
+        {
+            m_M2TList.insert(std::make_pair(nMessageID, nWorkThreadID));
+        }
+
+        unordered_map<int, int>::iterator fmt = m_T2MList.find(nWorkThreadID);
+
+        if (m_T2MList.end() == fmt)
+        {
+            m_T2MList.insert(std::make_pair(nWorkThreadID, nMessageID));
+        }
+    }
+
+    //根据配置文件创建对应函数
+    for (auto it = m_T2MList.begin(); it != m_T2MList.end(); ++it)
+    {
+        m_ThreadQueueManager.Create(it->first);
+    }
+
     return 0;
 }
 
@@ -81,8 +119,6 @@ void CTMService::Close()
 {
     //关闭定时器
     m_tsTimer.Close();
-
-    Sleep(100);
 
     //清空
     vector<CTimerInfo* > vecInfoList;
@@ -94,9 +130,13 @@ void CTMService::Close()
     }
 
     m_HashTimerList.Close();
+
+    m_ThreadQueueManager.Close();
+
+    this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
-int CTMService::_AddMessage(string strName, ts_timer::CTime_Value tvexpire, void* pArg, int nMessageID)
+int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::UserFunctor&& f, int _Message_id, void* _arg)
 {
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
@@ -113,39 +153,26 @@ int CTMService::_AddMessage(string strName, ts_timer::CTime_Value tvexpire, void
         return -1;
     }
 
+    unordered_map<int, int>::iterator ftm = m_M2TList.find(_Message_id);
+
+    if (m_M2TList.end() == ftm)
+    {
+        return -1;
+    }
+
     CEventsInfo objEventsInfo;
 
-    objEventsInfo.m_tcExpire   = ts_timer::GetTimeofDay() + tvexpire;
-    objEventsInfo.m_pArg       = pArg;
-    objEventsInfo.m_nMessageID = nMessageID;
+    ts_timer::CTime_Value tvexpire = ts_timer::CTime_Value(sec, usec);
+
+    objEventsInfo.m_tcExpire      = ts_timer::GetTimeofDay() + tvexpire;
+    objEventsInfo.m_pArg          = _arg;
+    objEventsInfo.m_nMessageID    = _Message_id;
+    objEventsInfo.m_nWorkThreadID = ftm->second;
+    objEventsInfo.fn              = std::move(f);
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
     pTimerInfo->m_objMutex.UnLock();
 
     return 0;
-}
-
-int CTMService::AddMessage(const char* pName, long sec, long usec, void* pArg, int nMessageID)
-{
-    return _AddMessage(pName, ts_timer::CTime_Value(sec, usec), pArg, nMessageID);
-}
-
-
-ITMService* CreateCTMService()
-{
-    CTMService* p = new CTMService;
-    p->Init();
-    return p;
-}
-
-void DsetroyCTMService(ITMService* pTM)
-{
-    CTMService* p = dynamic_cast<CTMService*>(pTM);
-
-    if (nullptr != p)
-    {
-        p->Close();
-        delete pTM;
-    }
 }
