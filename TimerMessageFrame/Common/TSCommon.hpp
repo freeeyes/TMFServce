@@ -6,11 +6,18 @@
 #include "ThreadLock.h"
 #include "HashTable.h"
 #include "ThreadLogic.h"
+#include "IMessageQueueManager.h"
 #include <vector>
 
 using namespace std;
 
 const char XML_CONF_FILE[] = "Timer.xml";
+
+enum Enum_Message_Mode
+{
+    Lambda_Mode = 0,
+    Message_Mode,
+};
 
 class CEventsInfo
 {
@@ -20,8 +27,9 @@ public:
     int                         m_nMessageID;
     int                         m_nWorkThreadID;
     CMessageInfo::UserFunctor   fn;
+    IMessageQueueManager*       m_pMessageQueueManager;
 
-    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0)
+    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0), m_pMessageQueueManager(NULL)
     {
     }
 };
@@ -67,9 +75,14 @@ public:
                 //到时的数据，拿出来处理
                 PRINTF("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName.c_str());
 
-                if (NULL != pTimeInfo->m_pMessageQueueManager)
+                if ((*it).m_pMessageQueueManager != NULL)
                 {
-                    //输出到消息队列
+                    //输出到消息队列(消息)
+                    (*it).m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
+                }
+                else if (NULL != pTimeInfo->m_pMessageQueueManager)
+                {
+                    //输出到消息队列(lamba)
                     pTimeInfo->m_pMessageQueueManager->AddMessage((*it).m_nWorkThreadID,
                             std::move((*it).fn),
                             (*it).m_nMessageID,

@@ -54,9 +54,6 @@
     <ClInclude Include="Common\HashTable.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\IMessageQueueManager.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\ILogicQueue.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -67,6 +64,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ThreadLogic.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\IMessageQueueManager.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

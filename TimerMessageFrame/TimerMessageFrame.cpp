@@ -17,8 +17,8 @@ public:
 int main()
 {
     CTMService tm;
-    tm.Init();
     CTestUser _test_user;
+    tm.Init();
 
     //测试添加一个消息
     ts_timer::CTime_Value tvNow = ts_timer::GetTimeofDay();

@@ -1,7 +1,7 @@
 #include "CTMService.h"
 
 
-CTMService::CTMService() :m_nTimerMaxCount(0)
+CTMService::CTMService() :m_nTimerMaxCount(0), m_emMessageMode(Lambda_Mode), m_pMessageQueueManager(NULL)
 {
 }
 
@@ -115,6 +115,12 @@ int CTMService::Init()
     return 0;
 }
 
+void CTMService::SetMessageQueue(IMessageQueueManager* pMessageQueueManager)
+{
+    m_pMessageQueueManager = pMessageQueueManager;
+    m_emMessageMode = Message_Mode;
+}
+
 void CTMService::Close()
 {
     //¹Ø±Õ¶¨Ê±Æ÷
@@ -138,6 +144,11 @@ void CTMService::Close()
 
 int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::UserFunctor&& f, int _Message_id, void* _arg)
 {
+    if (m_emMessageMode != Lambda_Mode)
+    {
+        return -1;
+    }
+
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
     if (NULL == pTimerInfo)
@@ -157,6 +168,7 @@ int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::Us
 
     if (m_M2TList.end() == ftm)
     {
+        pTimerInfo->m_objMutex.UnLock();
         return -1;
     }
 
@@ -169,6 +181,53 @@ int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::Us
     objEventsInfo.m_nMessageID    = _Message_id;
     objEventsInfo.m_nWorkThreadID = ftm->second;
     objEventsInfo.fn              = std::move(f);
+
+    pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
+
+    pTimerInfo->m_objMutex.UnLock();
+
+    return 0;
+}
+
+int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id, void* _arg)
+{
+    if (m_emMessageMode != Message_Mode)
+    {
+        return -1;
+    }
+
+    CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
+
+    if (NULL == pTimerInfo)
+    {
+        return -1;
+    }
+
+    pTimerInfo->m_objMutex.Lock();
+
+    if (pTimerInfo->m_vecEventsList.size() >= pTimerInfo->m_nMaxQueueList)
+    {
+        pTimerInfo->m_objMutex.UnLock();
+        return -1;
+    }
+
+    unordered_map<int, int>::iterator ftm = m_M2TList.find(_Message_id);
+
+    if (m_M2TList.end() == ftm)
+    {
+        pTimerInfo->m_objMutex.UnLock();
+        return -1;
+    }
+
+    CEventsInfo objEventsInfo;
+
+    ts_timer::CTime_Value tvexpire = ts_timer::CTime_Value(sec, usec);
+
+    objEventsInfo.m_tcExpire             = ts_timer::GetTimeofDay() + tvexpire;
+    objEventsInfo.m_pArg                 = _arg;
+    objEventsInfo.m_nMessageID           = _Message_id;
+    objEventsInfo.m_nWorkThreadID        = ftm->second;
+    objEventsInfo.m_pMessageQueueManager = m_pMessageQueueManager;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
