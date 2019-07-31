@@ -26,7 +26,7 @@ int main()
 
     ts_timer::CTime_Value tvexpire = tvNow + tvInterval;
 
-    if (0 != tm.AddMessageClass("test1", 1, 0, &_test_user, &CTestUser::DoMessage, 1, NULL))
+    if (0 != tm.AddMessageClass("test1", 1234, 1, 0, &_test_user, &CTestUser::DoMessage, 1, NULL))
     {
         PRINTF("[main]AddMessage error.\n");
     }
