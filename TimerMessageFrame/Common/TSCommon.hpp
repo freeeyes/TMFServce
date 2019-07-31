@@ -19,6 +19,12 @@ enum Enum_Message_Mode
     Message_Mode,
 };
 
+enum Enum_Message_Execute_State
+{
+    Message_Run = 0,
+    Message_Cancel,
+};
+
 class CEventsInfo
 {
 public:
@@ -26,10 +32,13 @@ public:
     void*                       m_pArg;
     int                         m_nMessageID;
     int                         m_nWorkThreadID;
+    int                         m_nMessagePos;
+    Enum_Message_Execute_State  m_emMessageState;
+
     CMessageInfo::UserFunctor   fn;
     IMessageQueueManager*       m_pMessageQueueManager;
 
-    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0), m_pMessageQueueManager(NULL)
+    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0), m_nMessagePos(0), m_emMessageState(Message_Run), m_pMessageQueueManager(NULL)
     {
     }
 };
@@ -47,8 +56,9 @@ public:
     CThreadLock   m_objMutex;
     vecEventsList m_vecEventsList;
     CThreadQueueManager* m_pMessageQueueManager;
+    int m_nMessageIndex;
 
-    CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL)
+    CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL), m_nMessageIndex(0)
     {
     }
 };
@@ -75,12 +85,12 @@ public:
                 //到时的数据，拿出来处理
                 PRINTF("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName.c_str());
 
-                if ((*it).m_pMessageQueueManager != NULL)
+                if ((*it).m_pMessageQueueManager != NULL && Message_Run == (*it).m_emMessageState)
                 {
                     //输出到消息队列(消息)
                     (*it).m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
                 }
-                else if (NULL != pTimeInfo->m_pMessageQueueManager)
+                else if (NULL != pTimeInfo->m_pMessageQueueManager && Message_Run == (*it).m_emMessageState)
                 {
                     //输出到消息队列(lamba)
                     pTimeInfo->m_pMessageQueueManager->AddMessage((*it).m_nWorkThreadID,

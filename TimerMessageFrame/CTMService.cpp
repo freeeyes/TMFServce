@@ -56,7 +56,7 @@ int CTMService::Init()
     m_tsTimer.Init(m_nTimerMaxCount);
     m_tsTimer.Run();
 
-    Sleep(100);
+    this_thread::sleep_for(std::chrono::milliseconds(100));
 
     vector<CTimerInfo* > vecInfoList;
     m_HashTimerList.Get_All_Used(vecInfoList);
@@ -181,12 +181,13 @@ int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::Us
     objEventsInfo.m_nMessageID    = _Message_id;
     objEventsInfo.m_nWorkThreadID = ftm->second;
     objEventsInfo.fn              = std::move(f);
+    objEventsInfo.m_nMessagePos   = pTimerInfo->m_nMessageIndex++;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
     pTimerInfo->m_objMutex.UnLock();
 
-    return 0;
+    return objEventsInfo.m_nMessagePos;
 }
 
 int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id, void* _arg)
@@ -228,8 +229,34 @@ int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id,
     objEventsInfo.m_nMessageID           = _Message_id;
     objEventsInfo.m_nWorkThreadID        = ftm->second;
     objEventsInfo.m_pMessageQueueManager = m_pMessageQueueManager;
+    objEventsInfo.m_nMessagePos          = pTimerInfo->m_nMessageIndex++;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
+
+    pTimerInfo->m_objMutex.UnLock();
+
+    return objEventsInfo.m_nMessagePos;
+}
+
+int CTMService::DeleteMessage(string strName, int nMessagePos)
+{
+    CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
+
+    if (NULL == pTimerInfo)
+    {
+        return -1;
+    }
+
+    pTimerInfo->m_objMutex.Lock();
+
+    for (int i = 0; i < (int)pTimerInfo->m_vecEventsList.size(); i++)
+    {
+        if (pTimerInfo->m_vecEventsList[i].m_nMessagePos == nMessagePos)
+        {
+            pTimerInfo->m_vecEventsList[i].m_emMessageState = Message_Cancel;
+            break;
+        }
+    }
 
     pTimerInfo->m_objMutex.UnLock();
 

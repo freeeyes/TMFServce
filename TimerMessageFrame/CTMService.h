@@ -28,6 +28,8 @@ public:
 
     int AddMessage(string strName, long sec, long usec, int _Message_id, void* _arg);
 
+    int DeleteMessage(string strName, int nMessagePos);
+
 private:
     ts_timer::CTimerThread     m_tsTimer;
     int                        m_nTimerMaxCount;
