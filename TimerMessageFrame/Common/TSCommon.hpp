@@ -19,6 +19,12 @@ enum Enum_Message_Mode
     Message_Mode,
 };
 
+enum Enum_Timer_Mode
+{
+    Timer_Mode_Run_Once = 0,
+    Timer_Mode_Interval,
+};
+
 enum Enum_Message_Execute_State
 {
     Message_Run = 0,
@@ -33,12 +39,15 @@ public:
     int                         m_nMessageID;
     int                         m_nWorkThreadID;
     int                         m_nMessagePos;
+    int                         m_nSec;                    //time of interval
+    int                         m_nUsec;
     Enum_Message_Execute_State  m_emMessageState;
+    Enum_Timer_Mode             m_emTimerMode;
 
     CMessageInfo::UserFunctor   fn;
     IMessageQueueManager*       m_pMessageQueueManager;
 
-    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0), m_nMessagePos(0), m_emMessageState(Message_Run), m_pMessageQueueManager(NULL)
+    CEventsInfo() : m_pArg(NULL), m_nMessageID(0), m_nWorkThreadID(0), m_nMessagePos(0), m_nSec(0), m_nUsec(0), m_emMessageState(Message_Run), m_emTimerMode(Timer_Mode_Run_Once), m_pMessageQueueManager(NULL)
     {
     }
 };
@@ -104,7 +113,16 @@ public:
                     PRINTF("[CTaskTimeNode::Run](%d) is disposed.\n", (*it).m_nMessageID);
                 }
 
-                it = pTimeInfo->m_vecEventsList.erase(it);
+                if ((*it).m_emTimerMode == Timer_Mode_Run_Once)
+                {
+                    it = pTimeInfo->m_vecEventsList.erase(it);
+                }
+                else
+                {
+                    //如果是定时执行需求，重新计算下一次的执行时间。
+                    ts_timer::CTime_Value tvexpire = ts_timer::CTime_Value((*it).m_nSec, (*it).m_nUsec);
+                    (*it).m_tcExpire = tvNow + tvexpire;
+                }
             }
             else
             {

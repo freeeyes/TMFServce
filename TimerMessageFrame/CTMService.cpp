@@ -142,7 +142,7 @@ void CTMService::Close()
     this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
-int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::UserFunctor&& f, int _Message_id, void* _arg)
+int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::UserFunctor&& f, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode)
 {
     if (m_emMessageMode != Lambda_Mode)
     {
@@ -182,6 +182,9 @@ int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::Us
     objEventsInfo.m_nWorkThreadID = ftm->second;
     objEventsInfo.fn              = std::move(f);
     objEventsInfo.m_nMessagePos   = pTimerInfo->m_nMessageIndex++;
+    objEventsInfo.m_nSec          = sec;
+    objEventsInfo.m_nUsec         = usec;
+    objEventsInfo.m_emTimerMode   = emTimerMode;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
@@ -190,7 +193,7 @@ int CTMService::AddMessage(string strName, long sec, long usec, CMessageInfo::Us
     return objEventsInfo.m_nMessagePos;
 }
 
-int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id, void* _arg)
+int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode)
 {
     if (m_emMessageMode != Message_Mode)
     {
@@ -230,6 +233,9 @@ int CTMService::AddMessage(string strName, long sec, long usec, int _Message_id,
     objEventsInfo.m_nWorkThreadID        = ftm->second;
     objEventsInfo.m_pMessageQueueManager = m_pMessageQueueManager;
     objEventsInfo.m_nMessagePos          = pTimerInfo->m_nMessageIndex++;
+    objEventsInfo.m_nSec                 = sec;
+    objEventsInfo.m_nUsec                = usec;
+    objEventsInfo.m_emTimerMode          = emTimerMode;
 
     pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
 
