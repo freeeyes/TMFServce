@@ -65,9 +65,8 @@ public:
     CThreadLock   m_objMutex;
     vecEventsList m_vecEventsList;
     CThreadQueueManager* m_pMessageQueueManager;
-    int m_nMessageIndex;
 
-    CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL), m_nMessageIndex(0)
+    CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL)
     {
     }
 };
