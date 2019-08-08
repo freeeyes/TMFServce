@@ -1,6 +1,5 @@
 #include "CTMService.h"
 
-
 CTMService::CTMService() :m_nTimerMaxCount(0), m_emMessageMode(Lambda_Mode), m_pMessageQueueManager(NULL)
 {
 }
@@ -267,4 +266,25 @@ int CTMService::DeleteMessage(string strName, int nMessagePos)
     pTimerInfo->m_objMutex.UnLock();
 
     return 0;
+}
+
+
+ITMService* CreateCTMService(IMessageQueueManager*& pMessageQueueManager)
+{
+	if (nullptr == pMessageQueueManager)
+		return nullptr;
+	CTMService* p = new CTMService();
+	p->Init();
+	p->SetMessageQueue(pMessageQueueManager);
+	return p;
+}
+
+void DsetroyCTMService(ITMService*& pTM)
+{
+	CTMService* p = dynamic_cast<CTMService*>(pTM);
+	if (nullptr != p)
+	{
+		p->Close();
+		delete p;
+	}
 }

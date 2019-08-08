@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TSCommon.hpp"
-
+#include "ITMService.h"
 
 class IA
 {
@@ -15,9 +15,9 @@ public:
 };
 
 
-class CTMService;
+class ITMService;
 
-class CTMService
+class CTMService : public ITMService
 {
 public:
     CTMService();

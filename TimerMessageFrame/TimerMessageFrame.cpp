@@ -14,6 +14,8 @@ public:
 };
 
 
+#ifndef TIMERLIB_BUILD_DLL
+
 int main()
 {
     CTMService tm;
@@ -37,7 +39,9 @@ int main()
     return 0;
 }
 
-/*
+#else
+
+
 BOOL APIENTRY DllMain(HANDLE hModule,
     DWORD  ul_reason_for_call,
     LPVOID lpReserved)
@@ -59,5 +63,5 @@ BOOL APIENTRY DllMain(HANDLE hModule,
     }
     return TRUE;
 }
-*/
 
+#endif
