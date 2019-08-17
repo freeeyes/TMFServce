@@ -148,6 +148,11 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
+	if (nullptr == _arg)
+	{
+		return -1;
+	}
+
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
     if (NULL == pTimerInfo)
@@ -199,6 +204,11 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
+	if (nullptr == _arg)
+	{
+		return -1;
+	}
+
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
     if (NULL == pTimerInfo)
@@ -243,29 +253,32 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
     return objEventsInfo.m_nMessagePos;
 }
 
-int CTMService::DeleteMessage(string strName, int nMessagePos)
+void* CTMService::DeleteMessage(string strName, int nMessagePos)
 {
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
-    if (NULL == pTimerInfo)
+    if (nullptr == pTimerInfo)
     {
-        return -1;
+        return nullptr;
     }
 
     pTimerInfo->m_objMutex.Lock();
+
+	void* p_arg = nullptr;
 
     for (int i = 0; i < (int)pTimerInfo->m_vecEventsList.size(); i++)
     {
         if (pTimerInfo->m_vecEventsList[i].m_nMessagePos == nMessagePos)
         {
             pTimerInfo->m_vecEventsList[i].m_emMessageState = Message_Cancel;
+			p_arg = pTimerInfo->m_vecEventsList[i].m_pArg;
             break;
         }
     }
 
     pTimerInfo->m_objMutex.UnLock();
 
-    return 0;
+    return p_arg;
 }
 
 
@@ -274,8 +287,8 @@ ITMService* CreateCTMService(IMessageQueueManager*& pMessageQueueManager)
 	if (nullptr == pMessageQueueManager)
 		return nullptr;
 	CTMService* p = new CTMService();
-	p->Init();
 	p->SetMessageQueue(pMessageQueueManager);
+	p->Init();
 	return p;
 }
 
