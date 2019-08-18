@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{6c5b7a07-edd9-46da-9c37-b3adae145b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{694e680c-3d1d-4acd-b8f2-692979d8aa3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\TimerMessageFrame\Common\HashTable.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\ILogicQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\IMessageQueueManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\ITSTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\Lcm.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\ThreadLock.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\ThreadLogic.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\Time_Value.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerCommon.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerInfo.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerThread.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\XmlOpeation.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\CTMService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\ITMService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\TimerMessageFrame\Common\ILogicQueue.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\Common\ThreadLogic.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\Common\Time_Value.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\Common\TimerInfo.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\Common\TimerThread.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\Common\XmlOpeation.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\CTMService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimerMessageFrame\TimerMessageFrame.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

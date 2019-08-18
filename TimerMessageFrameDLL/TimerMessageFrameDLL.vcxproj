@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -20,25 +20,23 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{D042CA13-A6BD-401B-B066-22915E135C57}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TimerMessageFrame</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>TimerMessageFrame_dll</ProjectName>
+    <ProjectGuid>{E79F1ECC-3678-4CE5-AEDB-DA482FF9E319}</ProjectGuid>
+    <RootNamespace>TimerMessageFrameDLL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -47,11 +45,11 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -71,130 +69,90 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>.\Bin</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>.\Bin</OutDir>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>./Common; ./TinyXML;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TIMERLIB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>TIMERLIB_BUILD_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./Common; ./TinyXML;</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>TIMERLIB_BUILD_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./Common; ./TinyXML;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Common\HashTable.h" />
-    <ClInclude Include="Common\ILogicQueue.h" />
-    <ClInclude Include="Common\IMessageQueueManager.h" />
-    <ClInclude Include="Common\ITSTimer.h" />
-    <ClInclude Include="Common\Lcm.h" />
-    <ClInclude Include="Common\ThreadLock.h" />
-    <ClInclude Include="Common\ThreadLogic.h" />
-    <ClInclude Include="Common\TimerCommon.h" />
-    <ClInclude Include="Common\TimerInfo.h" />
-    <ClInclude Include="Common\TimerThread.h" />
-    <ClInclude Include="Common\Time_Value.h" />
-    <ClInclude Include="Common\TSCommon.hpp" />
-    <ClInclude Include="Common\XmlOpeation.h" />
-    <ClInclude Include="CTMService.h" />
-    <ClInclude Include="ITMService.h" />
-    <ClInclude Include="TinyXML\tinystr.h" />
-    <ClInclude Include="TinyXML\tinyxml.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\HashTable.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\ILogicQueue.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\IMessageQueueManager.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\ITSTimer.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\Lcm.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\ThreadLock.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\ThreadLogic.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerCommon.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerInfo.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\TimerThread.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\Time_Value.h" />
+    <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp" />
+    <ClInclude Include="..\TimerMessageFrame\Common\XmlOpeation.h" />
+    <ClInclude Include="..\TimerMessageFrame\CTMService.h" />
+    <ClInclude Include="..\TimerMessageFrame\ITMService.h" />
+    <ClInclude Include="..\TimerMessageFrame\TinyXML\tinystr.h" />
+    <ClInclude Include="..\TimerMessageFrame\TinyXML\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Common\ILogicQueue.cpp" />
-    <ClCompile Include="Common\ThreadLogic.cpp" />
-    <ClCompile Include="Common\TimerInfo.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Common\TimerThread.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Common\Time_Value.cpp" />
-    <ClCompile Include="Common\XmlOpeation.cpp" />
-    <ClCompile Include="CTMService.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="TimerMessageFrame.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinystr.cpp" />
-    <ClCompile Include="TinyXML\tinyxml.cpp" />
-    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
-    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\ILogicQueue.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\ThreadLogic.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\TimerInfo.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\TimerThread.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\Time_Value.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\Common\XmlOpeation.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\CTMService.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\TimerMessageFrame.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinystr.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlparser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
