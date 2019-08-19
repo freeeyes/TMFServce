@@ -54,9 +54,6 @@
     <ClInclude Include="..\TimerMessageFrame\Common\TimerThread.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\TimerMessageFrame\Common\XmlOpeation.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -71,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="..\TimerMessageFrame\ITMService.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

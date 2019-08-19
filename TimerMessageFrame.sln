@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TimerMessageFrame", "TimerMessageFrame\TimerMessageFrame.vcxproj", "{8DA75586-0612-47E2-BA4E-CB4821D9243A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TimerMessageFrameDLL", "TimerMessageFrameDLL\TimerMessageFrameDLL.vcxproj", "{E79F1ECC-3678-4CE5-AEDB-DA482FF9E319}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TimerMessageFrameDLL", "TimerMessageFrame\TimerMessageFrameDLL.vcxproj", "{E79F1ECC-3678-4CE5-AEDB-DA482FF9E319}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
