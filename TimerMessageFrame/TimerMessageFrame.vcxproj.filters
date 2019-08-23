@@ -57,9 +57,6 @@
     <ClInclude Include="Common\IMessageQueueManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="ITMService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Common\CTimerEvent.h">
       <Filter>Common</Filter>
     </ClInclude>

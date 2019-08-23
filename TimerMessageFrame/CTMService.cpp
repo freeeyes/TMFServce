@@ -258,6 +258,7 @@ int CTMService::DeleteMessage(string strName, int nMessagePos)
 }
 
 
+#ifdef TIMERLIB_BUILD_DLL
 ITMService* CreateCTMService(IMessageQueueManager*& pMessageQueueManager)
 {
     if (nullptr == pMessageQueueManager)
@@ -282,3 +283,4 @@ void DsetroyCTMService(ITMService*& pTM)
         delete p;
     }
 }
+#endif
