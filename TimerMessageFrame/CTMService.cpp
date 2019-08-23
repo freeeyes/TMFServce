@@ -2,58 +2,10 @@
 
 void timer_run_execute(void* arg)
 {
-    auto tt_now = system_clock::now();
-
     CTimerInfo* timer_info = (CTimerInfo*)arg;
     cout << "[timer_run_execute]" << timer_info->m_nID << endl;
 
-    timer_info->m_objMutex.Lock();
-
-    //循环比较是否到期
-    for (vecEventsList::iterator it = timer_info->m_vecEventsList.begin(); it != timer_info->m_vecEventsList.end();)
-    {
-        if ((*it).m_ttNextTime <= tt_now)
-        {
-            //到时的数据，拿出来处理
-            std::cout << "[CTaskTimeNode::Run]("<< timer_info->m_szName.c_str() << ") is Arrived.\n" << endl;
-
-            if ((*it).m_pMessageQueueManager != NULL && Message_Run == (*it).m_emMessageState)
-            {
-                //输出到消息队列(消息)
-                (*it).m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
-            }
-            else if (NULL != timer_info->m_pMessageQueueManager && Message_Run == (*it).m_emMessageState)
-            {
-                //输出到消息队列(lamba)
-                timer_info->m_pMessageQueueManager->AddMessage((*it).m_nWorkThreadID,
-                        std::move((*it).fn),
-                        (*it).m_nMessageID,
-                        (*it).m_pArg);
-            }
-            else
-            {
-                //打印日志
-                std::cout << "[CTaskTimeNode::Run]("<< (*it).m_nMessageID << ") is disposed.\n" << endl;
-            }
-
-            if ((*it).m_emTimerMode == Timer_Mode_Run_Once)
-            {
-                it = timer_info->m_vecEventsList.erase(it);
-            }
-            else
-            {
-                //如果是定时执行需求，重新计算下一次的执行时间。
-                system_clock::time_point ttNextTime = tt_now + seconds((*it).m_nSec) + milliseconds((*it).m_nUsec);
-                (*it).m_ttNextTime = ttNextTime;
-            }
-        }
-        else
-        {
-            ++it;
-        }
-    }
-
-    timer_info->m_objMutex.UnLock();
+    timer_info->run();
 }
 
 CTMService::CTMService() :m_nTimerMaxCount(0), m_pMessageQueueManager(NULL)
@@ -195,11 +147,8 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
-    pTimerInfo->m_objMutex.Lock();
-
     if (pTimerInfo->m_vecEventsList.size() >= pTimerInfo->m_nMaxQueueList)
     {
-        pTimerInfo->m_objMutex.UnLock();
         return -1;
     }
 
@@ -207,7 +156,6 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
 
     if (m_M2TList.end() == ftm)
     {
-        pTimerInfo->m_objMutex.UnLock();
         return -1;
     }
 
@@ -225,9 +173,7 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
     objEventsInfo.m_nUsec                = usec;
     objEventsInfo.m_emTimerMode          = emTimerMode;
 
-    pTimerInfo->m_vecEventsList.push_back(objEventsInfo);
-
-    pTimerInfo->m_objMutex.UnLock();
+    pTimerInfo->AddEventsInfo(objEventsInfo);
 
     return objEventsInfo.m_nMessagePos;
 }
@@ -241,18 +187,7 @@ int CTMService::DeleteMessage(string strName, int nMessagePos)
         return -1;
     }
 
-    pTimerInfo->m_objMutex.Lock();
-
-    for (int i = 0; i < (int)pTimerInfo->m_vecEventsList.size(); i++)
-    {
-        if (pTimerInfo->m_vecEventsList[i].m_nMessagePos == nMessagePos)
-        {
-            pTimerInfo->m_vecEventsList[i].m_emMessageState = Message_Cancel;
-            break;
-        }
-    }
-
-    pTimerInfo->m_objMutex.UnLock();
+    pTimerInfo->DeleteEventInfo(nMessagePos);
 
     return 0;
 }
