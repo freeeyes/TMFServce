@@ -3,7 +3,6 @@
 void timer_run_execute(void* arg)
 {
     CTimerInfo* timer_info = (CTimerInfo*)arg;
-    cout << "[timer_run_execute]" << timer_info->m_nID << endl;
 
     timer_info->run();
 }
@@ -70,8 +69,9 @@ int CTMService::Init()
 
     for (int i = 0; i < nTimerSize; i++)
     {
-        milliseconds timer_interval = milliseconds(vecInfoList[i]->m_nInterval);
-        timer_events_.add_timer(vecInfoList[i]->m_nID, timer_interval, timer_run_execute, &vecInfoList[i]);
+        CTimerInfo* pTimerInfo = vecInfoList[i];
+        milliseconds timer_interval = milliseconds(pTimerInfo->m_nInterval);
+        timer_events_.add_timer(vecInfoList[i]->m_nID, timer_interval, timer_run_execute, pTimerInfo);
     }
 
     //获得当前工作线程配置列表
@@ -152,12 +152,15 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
+    //这里不用比较消息ID
+    /*
     unordered_map<int, int>::iterator ftm = m_M2TList.find(_Message_id);
 
     if (m_M2TList.end() == ftm)
     {
-        return -1;
+      return -1;
     }
+    */
 
     CEventsInfo objEventsInfo;
 
@@ -166,7 +169,7 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
     objEventsInfo.m_ttNextTime           = ttNextTime;
     objEventsInfo.m_pArg                 = _arg;
     objEventsInfo.m_nMessageID           = _Message_id;
-    objEventsInfo.m_nWorkThreadID        = ftm->second;
+    objEventsInfo.m_nWorkThreadID        = 0;
     objEventsInfo.m_pMessageQueueManager = m_pMessageQueueManager;
     objEventsInfo.m_nMessagePos          = nMessagePos;
     objEventsInfo.m_nSec                 = sec;

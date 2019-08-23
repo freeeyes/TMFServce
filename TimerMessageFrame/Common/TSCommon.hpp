@@ -52,14 +52,6 @@ using vecEventsList = vector<CEventsInfo>;
 class CTimerInfo
 {
 public:
-    int  m_nID;
-    string m_szName;
-    int  m_nInterval;
-    int  m_nMaxQueueList;
-    mutable std::mutex m_objMutex;
-    vecEventsList m_vecEventsList;
-    CThreadQueueManager* m_pMessageQueueManager;
-
     CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL)
     {
     }
@@ -126,6 +118,15 @@ public:
             }
         }
     }
+
+public:
+    int  m_nID;
+    string m_szName;
+    int  m_nInterval;
+    int  m_nMaxQueueList;
+    mutable std::mutex m_objMutex;
+    vecEventsList m_vecEventsList;
+    CThreadQueueManager* m_pMessageQueueManager;
 };
 
 #endif
