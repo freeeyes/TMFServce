@@ -23,12 +23,7 @@ int main()
     tm.Init();
 
     //测试添加一个消息
-    ts_timer::CTime_Value tvNow = ts_timer::GetTimeofDay();
-    ts_timer::CTime_Value tvInterval(1, 0);
-
-    ts_timer::CTime_Value tvexpire = tvNow + tvInterval;
-
-    if (0 != tm.AddMessageClass("test1", 1234, 1, 0, &_test_user, &CTestUser::DoMessage, 1, NULL))
+    if (0 != tm.AddMessage("test1", 1234, 1, 0, 1000, &_test_user))
     {
         PRINTF("[main]AddMessage error.\n");
     }
@@ -43,24 +38,28 @@ int main()
 
 
 BOOL APIENTRY DllMain(HANDLE hModule,
-    DWORD  ul_reason_for_call,
-    LPVOID lpReserved)
+                      DWORD  ul_reason_for_call,
+                      LPVOID lpReserved)
 {
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
         printf("\nprocess attach of dll");
         break;
+
     case DLL_THREAD_ATTACH:
         printf("\nthread attach of dll");
         break;
+
     case DLL_THREAD_DETACH:
         printf("\nthread detach of dll");
         break;
+
     case DLL_PROCESS_DETACH:
         printf("\nprocess detach of dll");
         break;
     }
+
     return TRUE;
 }
 

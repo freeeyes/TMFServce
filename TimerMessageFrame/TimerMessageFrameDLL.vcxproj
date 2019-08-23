@@ -79,7 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./Common; ./TinyXML;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>TIMERLIB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TIMERLIB_BUILD_DLL;_WINDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,23 +129,19 @@
     <ClInclude Include="..\TimerMessageFrame\Common\Lcm.h" />
     <ClInclude Include="..\TimerMessageFrame\Common\ThreadLock.h" />
     <ClInclude Include="..\TimerMessageFrame\Common\ThreadLogic.h" />
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerCommon.h" />
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerInfo.h" />
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerThread.h" />
-    <ClInclude Include="..\TimerMessageFrame\Common\Time_Value.h" />
     <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp" />
     <ClInclude Include="..\TimerMessageFrame\Common\XmlOpeation.h" />
     <ClInclude Include="..\TimerMessageFrame\CTMService.h" />
     <ClInclude Include="..\TimerMessageFrame\ITMService.h" />
     <ClInclude Include="..\TimerMessageFrame\TinyXML\tinystr.h" />
     <ClInclude Include="..\TimerMessageFrame\TinyXML\tinyxml.h" />
+    <ClInclude Include="Common\CTimerEvent.h" />
+    <ClInclude Include="Common\CTimerNodeList.h" />
+    <ClInclude Include="Common\date.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\TimerMessageFrame\Common\ILogicQueue.cpp" />
     <ClCompile Include="..\TimerMessageFrame\Common\ThreadLogic.cpp" />
-    <ClCompile Include="..\TimerMessageFrame\Common\TimerInfo.cpp" />
-    <ClCompile Include="..\TimerMessageFrame\Common\TimerThread.cpp" />
-    <ClCompile Include="..\TimerMessageFrame\Common\Time_Value.cpp" />
     <ClCompile Include="..\TimerMessageFrame\Common\XmlOpeation.cpp" />
     <ClCompile Include="..\TimerMessageFrame\CTMService.cpp" />
     <ClCompile Include="..\TimerMessageFrame\TimerMessageFrame.cpp" />
@@ -153,6 +149,8 @@
     <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxml.cpp" />
     <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="..\TimerMessageFrame\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Common\CTimerEvent.cpp" />
+    <ClCompile Include="Common\CTimerNodeList.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

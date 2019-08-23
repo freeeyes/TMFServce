@@ -1,7 +1,7 @@
 #ifndef _TSCOMMON_H
 #define _TSCOMMON_H
 
-#include "TimerThread.h"
+#include "CTimerEvent.h"
 #include "XmlOpeation.h"
 #include "ThreadLock.h"
 #include "HashTable.h"
@@ -12,12 +12,6 @@
 using namespace std;
 
 const char XML_CONF_FILE[] = "Timer.xml";
-
-enum Enum_Message_Mode
-{
-    Lambda_Mode = 0,
-    Message_Mode,
-};
 
 enum Enum_Timer_Mode
 {
@@ -34,7 +28,7 @@ enum Enum_Message_Execute_State
 class CEventsInfo
 {
 public:
-    ts_timer::CTime_Value       m_tcExpire;
+    system_clock::time_point    m_ttNextTime;             //下一次执行时间
     void*                       m_pArg;
     int                         m_nMessageID;
     int                         m_nWorkThreadID;
@@ -68,75 +62,6 @@ public:
 
     CTimerInfo() : m_nID(0), m_szName{ '\0' }, m_nInterval(0), m_nMaxQueueList(0), m_pMessageQueueManager(NULL)
     {
-    }
-};
-
-//定时器消息处理
-class CTaskTimeNode : public ts_timer::ITimeNode
-{
-public:
-    CTaskTimeNode() {};
-
-    virtual ~CTaskTimeNode() = default;
-
-    virtual void Run(ts_timer::CTime_Value& tvNow, void* pArg, ts_timer::EM_Timer_State& emState)
-    {
-        CTimerInfo* pTimeInfo = (CTimerInfo*)pArg;
-
-        pTimeInfo->m_objMutex.Lock();
-
-        //循环比较是否到期
-        for (vecEventsList::iterator it = pTimeInfo->m_vecEventsList.begin(); it != pTimeInfo->m_vecEventsList.end();)
-        {
-            if ((*it).m_tcExpire <= tvNow)
-            {
-                //到时的数据，拿出来处理
-                PRINTF("[CTaskTimeNode::Run](%s) is Arrived.\n", pTimeInfo->m_szName.c_str());
-
-                if ((*it).m_pMessageQueueManager != NULL && Message_Run == (*it).m_emMessageState)
-                {
-                    //输出到消息队列(消息)
-                    (*it).m_pMessageQueueManager->SendLogicThreadMessage((*it).m_nMessageID, (*it).m_pArg);
-                }
-                else if (NULL != pTimeInfo->m_pMessageQueueManager && Message_Run == (*it).m_emMessageState)
-                {
-                    //输出到消息队列(lamba)
-                    pTimeInfo->m_pMessageQueueManager->AddMessage((*it).m_nWorkThreadID,
-                            std::move((*it).fn),
-                            (*it).m_nMessageID,
-                            (*it).m_pArg);
-                }
-                else
-                {
-                    //打印日志
-                    PRINTF("[CTaskTimeNode::Run](%d) is disposed.\n", (*it).m_nMessageID);
-                }
-
-                if ((*it).m_emTimerMode == Timer_Mode_Run_Once)
-                {
-                    it = pTimeInfo->m_vecEventsList.erase(it);
-                }
-                else
-                {
-                    //如果是定时执行需求，重新计算下一次的执行时间。
-                    ts_timer::CTime_Value tvexpire = ts_timer::CTime_Value((*it).m_nSec, (*it).m_nUsec);
-                    (*it).m_tcExpire = tvNow + tvexpire;
-                }
-            }
-            else
-            {
-                ++it;
-            }
-        }
-
-        pTimeInfo->m_objMutex.UnLock();
-
-        //printf_s("[CTaskTimeNode::Run](%s) is OK.\n", pTimeInfo->m_szName.c_str());
-    }
-
-    virtual void Error(int nLastRunTimerID, int nTimeoutTime, std::vector<ts_timer::CTime_Value>& vecTimoutList, void* pArg)
-    {
-        return;
     }
 };
 

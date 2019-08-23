@@ -42,18 +42,6 @@
     <ClInclude Include="..\TimerMessageFrame\Common\ThreadLogic.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\TimerMessageFrame\Common\Time_Value.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerCommon.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerInfo.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimerMessageFrame\Common\TimerThread.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\TimerMessageFrame\Common\XmlOpeation.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -72,21 +60,21 @@
     <ClInclude Include="..\TimerMessageFrame\Common\TSCommon.hpp">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\CTimerEvent.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CTimerNodeList.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\date.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\TimerMessageFrame\Common\ILogicQueue.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\TimerMessageFrame\Common\ThreadLogic.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TimerMessageFrame\Common\Time_Value.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TimerMessageFrame\Common\TimerInfo.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TimerMessageFrame\Common\TimerThread.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\TimerMessageFrame\Common\XmlOpeation.cpp">
@@ -109,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="..\TimerMessageFrame\TimerMessageFrame.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\CTimerEvent.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\CTimerNodeList.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
