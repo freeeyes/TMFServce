@@ -2,10 +2,14 @@
 
 #include <string>
 
+#if PSS_PLATFORM == PLATFORM_WIN
 #ifdef TIMERLIB_BUILD_DLL
 #define TIME_DECLDIR __declspec(dllexport)
 #else
 #define TIME_DECLDIR __declspec(dllimport)
+#endif
+#else
+#define TIME_DECLDIR
 #endif
 
 class ITMService;

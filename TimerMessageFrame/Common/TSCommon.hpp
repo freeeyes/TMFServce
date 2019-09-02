@@ -3,7 +3,6 @@
 
 #include "CTimerEvent.h"
 #include "XmlOpeation.h"
-#include "ThreadLock.h"
 #include "HashTable.h"
 #include "ThreadLogic.h"
 #include "IMessageQueueManager.h"

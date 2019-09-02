@@ -36,9 +36,6 @@
     <ClInclude Include="Common\XmlOpeation.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ThreadLock.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\HashTable.h">
       <Filter>Common</Filter>
     </ClInclude>

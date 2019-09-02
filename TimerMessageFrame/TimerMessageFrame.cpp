@@ -23,12 +23,12 @@ int main()
     tm.Init();
 
     //测试添加一个消息
-    if (0 != tm.AddMessage("test1", 1234, 1, 0, 1000, &_test_user))
+    if (-1 == tm.AddMessage("test1", 1234, 1, 0, 1000, &_test_user))
     {
         PRINTF("[main]AddMessage error.\n");
     }
 
-    getchar();
+    this_thread::sleep_for(std::chrono::milliseconds(2000));
 
     tm.Close();
     return 0;

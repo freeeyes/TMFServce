@@ -163,7 +163,6 @@
     <ClInclude Include="Common\IMessageQueueManager.h" />
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
-    <ClInclude Include="Common\ThreadLock.h" />
     <ClInclude Include="Common\ThreadLogic.h" />
     <ClInclude Include="Common\TSCommon.hpp" />
     <ClInclude Include="Common\XmlOpeation.h" />

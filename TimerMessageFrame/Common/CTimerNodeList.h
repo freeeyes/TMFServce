@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <functional>
 #include <vector>
+#include <memory>
 
 using namespace std;
 using namespace std::chrono;

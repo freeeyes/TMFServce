@@ -8,6 +8,19 @@
 typedef int int32;
 typedef unsigned int uint32;
 
+//自动判定操作系统
+#define PLATFORM_WIN     0
+#define PLATFORM_UNIX    1
+#define PLATFORM_APPLE   2
+
+#if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) || defined(__WIN64__) || defined(WIN64) || defined(_WIN64)
+#  define PSS_PLATFORM PLATFORM_WIN
+#elif defined(__APPLE_CC__)
+#  define PSS_PLATFORM PLATFORM_APPLE
+#else
+#  define PSS_PLATFORM PLATFORM_UNIX
+#endif
+
 #if PSS_PLATFORM == PLATFORM_WIN
 #define PRINTF printf_s
 #else
@@ -1320,6 +1333,8 @@ private:
     int32 GetHashTablePos(const char* lpszString, EM_HASH_STATE emHashState, T*& pT)
     {
         unsigned long uHashStart = HashString(lpszString, m_objHashPool.Get_Count());
+        
+        printf("[CHashTable::GetHashTablePos]uHashStart=%d, m_objHashPool.Get_Count()=%d.\n", uHashStart, m_objHashPool.Get_Count());
 
         //获取链表，并比对
         if (NULL == m_lpTable[uHashStart])

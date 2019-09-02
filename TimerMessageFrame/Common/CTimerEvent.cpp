@@ -97,6 +97,7 @@ void timer_thread_run(CTimerThreadInfo* timer_thread_info)
         }
     }
 
+		std::cout << "[timer_thread_run]is end." << endl;
     timer_thread_info->is_run_ = false;
 }
 
@@ -142,6 +143,12 @@ bool CTimerManager::del_timer(int timer_id)
 
     timer_thread_info_.condition_.notify_one();
     return true;
+}
+
+void CTimerManager::Close()
+{
+	timer_thread_info_.is_run_ = false;
+	timer_thread_info_.condition_.notify_one();
 }
 
 void CTimerManager::run()

@@ -129,12 +129,24 @@ void CTMService::Close()
     {
         delete (CTimerInfo* )vecInfoList[i];
     }
+    
+    std::cout << "[CTMService::Close] 1" << endl;
 
     m_HashTimerList.Close();
+    
+    std::cout << "[CTMService::Close] 2" << endl;
 
     m_ThreadQueueManager.Close();
+    
+    std::cout << "[CTMService::Close] 3" << endl;
+    	
+    timer_events_.Close();
+    
+    std::cout << "[CTMService::Close] 4" << endl;
 
     this_thread::sleep_for(std::chrono::milliseconds(100));
+    	
+    std::cout << "[CTMService::Close] 5" << endl;
 }
 
 int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode)

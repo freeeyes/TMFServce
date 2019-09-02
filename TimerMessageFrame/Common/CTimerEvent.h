@@ -60,6 +60,11 @@ class CTimerThreadInfo
 public:
     CTimerThreadInfo() : is_run_(false) {};
 
+    ~CTimerThreadInfo()
+    {
+        std::cout << "[CTimerThreadInfo::~CTimerThreadInfo]" << endl;
+    }
+
     void get_timer_events_list(vector<CTimerEvents>& timer_events_temp_list_)
     {
         std::lock_guard <std::mutex> lock(thread_mutex_);
@@ -88,6 +93,8 @@ public:
     bool add_timer(int timer_id, milliseconds timer_interval, TimerFunctor&& f, void* arg);
 
     bool del_timer(int timer_id);
+
+    void Close();
 
 private:
     void run();
