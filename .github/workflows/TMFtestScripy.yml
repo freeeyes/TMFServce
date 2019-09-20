@@ -8,6 +8,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: show path
+      - run: ls
       - name: in path
         run: cd ./TimerMessageFrame/Bin/
       - name: make
