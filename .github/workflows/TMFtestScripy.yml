@@ -10,9 +10,6 @@ jobs:
       - uses: actions/checkout@v1
       - name: in path
         run: cd ./TimerMessageFrame/Bin/
-      - name: show path
         run: ls
-      - name: make
         run: make
-      - name: run test
         run: ./TMService
