@@ -63,7 +63,7 @@ public:
     ~CTimerThreadInfo()
     {
         std::cout << "[CTimerThreadInfo::~CTimerThreadInfo]" << endl;
-    } i
+    }
 
     void get_timer_events_list(vector<CTimerEvents>& timer_events_temp_list_)
     {
