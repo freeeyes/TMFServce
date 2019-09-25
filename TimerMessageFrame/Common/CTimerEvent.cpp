@@ -110,7 +110,7 @@ CTimerManager::~CTimerManager()
 {
 }
 
-bool CTimerManager::add_timer(int timer_id, milliseconds timer_interval, TimerFunctor&& f, void* arg)
+bool CTimerManager::Add_Timer(int timer_id, milliseconds timer_interval, TimerFunctor&& f, void* arg)
 {
     //如果线程没有启动，则启动定时器线程
     run();
@@ -131,7 +131,7 @@ bool CTimerManager::add_timer(int timer_id, milliseconds timer_interval, TimerFu
     return true;
 }
 
-bool CTimerManager::del_timer(int timer_id)
+bool CTimerManager::Del_Timer(int timer_id)
 {
     std::lock_guard <std::mutex> lock(timer_thread_info_.thread_mutex_);
 
@@ -142,6 +142,16 @@ bool CTimerManager::del_timer(int timer_id)
     timer_thread_info_.timer_events_list_.push_back(timer_event);
 
     timer_thread_info_.condition_.notify_one();
+    return true;
+}
+
+bool CTimerManager::Pause()
+{
+    return true;
+}
+
+bool CTimerManager::Restore()
+{
     return true;
 }
 

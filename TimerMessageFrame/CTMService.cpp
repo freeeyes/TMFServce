@@ -70,7 +70,7 @@ int CTMService::Init()
     for (int i = 0; i < nTimerSize; i++)
     {
         milliseconds timer_interval = milliseconds(vecInfoList[i]->m_nInterval);
-        timer_events_.add_timer(vecInfoList[i]->m_nID, timer_interval, timer_run_execute, vecInfoList[i]);
+        timer_events_.Add_Timer(vecInfoList[i]->m_nID, timer_interval, timer_run_execute, vecInfoList[i]);
     }
 
     //获得当前工作线程配置列表
