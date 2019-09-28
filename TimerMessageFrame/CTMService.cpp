@@ -182,18 +182,16 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
     return objEventsInfo.m_nMessagePos;
 }
 
-int CTMService::DeleteMessage(string strName, int nMessagePos)
+void* CTMService::DeleteMessage(string strName, int nMessagePos)
 {
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
     if (NULL == pTimerInfo)
     {
-        return -1;
+        return nullptr;
     }
 
-    pTimerInfo->DeleteEventInfo(nMessagePos);
-
-    return 0;
+	return pTimerInfo->DeleteEventInfo(nMessagePos);
 }
 
 

@@ -62,18 +62,23 @@ public:
         m_vecEventsList.push_back(objEventsInfo);
     }
 
-    void DeleteEventInfo(int nMessagePos)
+    void* DeleteEventInfo(int nMessagePos)
     {
         std::lock_guard <std::mutex> lock(m_objMutex);
+
+		void* prg = nullptr;
 
         for (int i = 0; i < (int)m_vecEventsList.size(); i++)
         {
             if (m_vecEventsList[i].m_nMessagePos == nMessagePos)
             {
                 m_vecEventsList[i].m_emMessageState = Message_Cancel;
+				prg = m_vecEventsList[i].m_pArg;
                 break;
             }
         }
+
+		return prg;
     }
 
     void run()
