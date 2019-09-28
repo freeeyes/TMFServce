@@ -207,7 +207,7 @@ ITMService* CreateCTMService(IMessageQueueManager*& pMessageQueueManager)
     p->Init();
     p->SetMessageQueue(pMessageQueueManager);
 
-    return nullptr;
+    return p;
 }
 
 void DsetroyCTMService(ITMService*& pTM)
