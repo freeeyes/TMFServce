@@ -7,7 +7,7 @@
 #include <time.h>
 #include "date.h"
 
-#ifdef WIN32
+#if defined(_WIN32) || defined(_WIN64)
 #define LOCALTIME_R(tm, ti)  localtime_s(tm, ti)
 #else
 #define LOCALTIME_R(tm, ti)  localtime_r(ti, tm)
