@@ -4,7 +4,6 @@ include makefile.define
 
 PATS = ../Common/CTimerEvent.o \
 	   ../Common/CTimerNodeList.o \
-	   ../Common/ILogicQueue.o \
 	   ../Common/ThreadLogic.o \
 	   ../Common/XmlOpeation.o \
 	   ../TinyXML/tinystr.o \
@@ -16,7 +15,6 @@ PATS = ../Common/CTimerEvent.o \
 
 LIB_BASE_OBJS = CTimerEvent.o \
 				CTimerNodeList.o \
-				ILogicQueue.o \
 				ThreadLogic.o \
 				XmlOpeation.o \
 				tinystr.o \
