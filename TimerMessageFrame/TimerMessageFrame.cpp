@@ -4,7 +4,7 @@
 #include <iostream>
 #include "CTMService.h"
 
-class CTestUser
+class CTestUser : public IMessagePrecess
 {
 public:
     void DoMessage(int _message_id, void* _arg)
@@ -23,7 +23,9 @@ int main()
     tm.Init();
 
     //测试添加一个消息
-    if (-1 == tm.AddMessage("test1", 1234, 1, 0, 1000, &_test_user))
+    Enum_Timer_Mode emTimerMode = Timer_Mode_Run_Once;
+
+    if (-1 == tm.AddMessage("test1", 1234, 1, 0, 1000, NULL, emTimerMode, (IMessagePrecess* )&_test_user))
     {
         PRINTF("[main]AddMessage error.\n");
     }

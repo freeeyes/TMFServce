@@ -7,7 +7,7 @@ void timer_run_execute(void* arg)
     timer_info->run();
 }
 
-CTMService::CTMService() :m_nTimerMaxCount(0), m_pMessageQueueManager(NULL)
+CTMService::CTMService() :m_nTimerMaxCount(0)
 {
 }
 
@@ -114,11 +114,6 @@ int CTMService::Init()
     return 0;
 }
 
-void CTMService::SetMessageQueue(IMessageQueueManager* pMessageQueueManager)
-{
-    m_pMessageQueueManager = pMessageQueueManager;
-}
-
 void CTMService::Close()
 {
     //清空
@@ -139,7 +134,7 @@ void CTMService::Close()
     this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
-int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode)
+int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode, IMessagePrecess* pMessagePrecess)
 {
     CTimerInfo* pTimerInfo = m_HashTimerList.Get_Hash_Box_Data(strName.c_str());
 
@@ -153,15 +148,18 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
-    //这里不用比较消息ID
-    /*
+    //根据MessageID查找对应消息处理线程ID
+    int _Message_thread_id = 0;
     unordered_map<int, int>::iterator ftm = m_M2TList.find(_Message_id);
 
-    if (m_M2TList.end() == ftm)
+    if (m_M2TList.end() != ftm)
     {
-      return -1;
+        _Message_thread_id = (int)ftm->second;
     }
-    */
+    else
+    {
+        return -1;
+    }
 
     CEventsInfo objEventsInfo;
 
@@ -170,8 +168,8 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
     objEventsInfo.m_ttNextTime           = ttNextTime;
     objEventsInfo.m_pArg                 = _arg;
     objEventsInfo.m_nMessageID           = _Message_id;
-    objEventsInfo.m_nWorkThreadID        = 0;
-    objEventsInfo.m_pMessageQueueManager = m_pMessageQueueManager;
+    objEventsInfo.m_nWorkThreadID        = _Message_thread_id;
+    objEventsInfo.m_pIMessagePrecess     = pMessagePrecess;
     objEventsInfo.m_nMessagePos          = nMessagePos;
     objEventsInfo.m_nSec                 = sec;
     objEventsInfo.m_nUsec                = usec;
@@ -191,7 +189,7 @@ void* CTMService::DeleteMessage(string strName, int nMessagePos)
         return nullptr;
     }
 
-	return pTimerInfo->DeleteEventInfo(nMessagePos);
+    return pTimerInfo->DeleteEventInfo(nMessagePos);
 }
 
 

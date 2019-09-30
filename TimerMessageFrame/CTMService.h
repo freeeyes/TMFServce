@@ -14,16 +14,14 @@ public:
 
     int Init();
 
-    void SetMessageQueue(IMessageQueueManager* pMessageQueueManager);
-
     void Close();
-    
+
 #ifndef TIMERLIB_BUILD_DLL
-    int AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode = Timer_Mode_Run_Once);
+    int AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode = Timer_Mode_Run_Once, IMessagePrecess* pMessagePrecess = NULL);
     void* DeleteMessage(string strName, int nMessagePos);
 #else
-	int AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode = Timer_Mode_Run_Once) override;
-	void* DeleteMessage(string strName, int nMessagePos) override;
+    int AddMessage(string strName, int nMessagePos, long sec, long usec, int _Message_id, void* _arg, Enum_Timer_Mode emTimerMode = Timer_Mode_Run_Once, IMessagePrecess* pMessagePrecess = NULL) override;
+    void* DeleteMessage(string strName, int nMessagePos) override;
 #endif
 
 private:
@@ -33,5 +31,4 @@ private:
     CThreadQueueManager        m_ThreadQueueManager;
     unordered_map<int, int>    m_T2MList;
     unordered_map<int, int>    m_M2TList;
-    IMessageQueueManager*      m_pMessageQueueManager;
 };
