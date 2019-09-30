@@ -159,8 +159,6 @@
     <ClInclude Include="Common\CTimerNodeList.h" />
     <ClInclude Include="Common\date.h" />
     <ClInclude Include="Common\HashTable.h" />
-    <ClInclude Include="Common\ILogicQueue.h" />
-    <ClInclude Include="Common\IMessageQueueManager.h" />
     <ClInclude Include="Common\ITSTimer.h" />
     <ClInclude Include="Common\Lcm.h" />
     <ClInclude Include="Common\ThreadLogic.h" />
@@ -173,7 +171,6 @@
   <ItemGroup>
     <ClCompile Include="Common\CTimerEvent.cpp" />
     <ClCompile Include="Common\CTimerNodeList.cpp" />
-    <ClCompile Include="Common\ILogicQueue.cpp" />
     <ClCompile Include="Common\ThreadLogic.cpp" />
     <ClCompile Include="Common\XmlOpeation.cpp" />
     <ClCompile Include="CTMService.cpp">
