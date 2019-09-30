@@ -161,23 +161,35 @@ int CTMService::AddMessage(string strName, int nMessagePos, long sec, long usec,
         return -1;
     }
 
-    CEventsInfo objEventsInfo;
+    if (sec <= 0 && usec <= 0)
+    {
+        //需要立即执行
+        m_ThreadQueueManager.AddMessageClass(_Message_thread_id,
+                                             pMessagePrecess,
+                                             &IMessagePrecess::DoMessage,
+                                             _Message_id,
+                                             _arg);
+    }
+    else
+    {
+        CEventsInfo objEventsInfo;
 
-    system_clock::time_point ttNextTime = system_clock::now() + seconds(sec) + milliseconds(usec);
+        system_clock::time_point ttNextTime = system_clock::now() + seconds(sec) + milliseconds(usec);
 
-    objEventsInfo.m_ttNextTime           = ttNextTime;
-    objEventsInfo.m_pArg                 = _arg;
-    objEventsInfo.m_nMessageID           = _Message_id;
-    objEventsInfo.m_nWorkThreadID        = _Message_thread_id;
-    objEventsInfo.m_pIMessagePrecess     = pMessagePrecess;
-    objEventsInfo.m_nMessagePos          = nMessagePos;
-    objEventsInfo.m_nSec                 = sec;
-    objEventsInfo.m_nUsec                = usec;
-    objEventsInfo.m_emTimerMode          = emTimerMode;
+        objEventsInfo.m_ttNextTime       = ttNextTime;
+        objEventsInfo.m_pArg             = _arg;
+        objEventsInfo.m_nMessageID       = _Message_id;
+        objEventsInfo.m_nWorkThreadID    = _Message_thread_id;
+        objEventsInfo.m_pIMessagePrecess = pMessagePrecess;
+        objEventsInfo.m_nMessagePos      = nMessagePos;
+        objEventsInfo.m_nSec             = sec;
+        objEventsInfo.m_nUsec            = usec;
+        objEventsInfo.m_emTimerMode      = emTimerMode;
 
-    pTimerInfo->AddEventsInfo(objEventsInfo);
+        pTimerInfo->AddEventsInfo(objEventsInfo);
+    }
 
-    return objEventsInfo.m_nMessagePos;
+    return nMessagePos;
 }
 
 void* CTMService::DeleteMessage(string strName, int nMessagePos)
